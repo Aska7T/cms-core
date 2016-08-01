@@ -28,7 +28,11 @@
 				<groupId>org.ttw.basic</groupId>
 				<artifactId>basic-hibernate</artifactId>
 		</dependency>
-		
+<dependency>
+    <groupId>javax.validation</groupId>
+    <artifactId>validation-api</artifactId>
+</dependency>
+
 
 	</dependencies>
 
