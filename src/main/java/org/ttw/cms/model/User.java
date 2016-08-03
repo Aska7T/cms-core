@@ -1,4 +1,4 @@
-package com.ttw.cms.model;
+package org.ttw.cms.model;
 
 import java.util.Date;
 
@@ -8,8 +8,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import com.sun.istack.internal.NotNull;
-
+import org.hibernate.validator.constraints.Email;
+/**
+ * 用户对象
+ * @author Administrator
+ *
+ */
 @Entity
 @Table(name="t_user")
 public class User {
@@ -43,6 +47,7 @@ public class User {
 		this.username = username;
 	}
 
+	@javax.validation.constraints.NotNull(message="用户密码不能为空")
 	public String getPassword() {
 		return password;
 	}
@@ -59,6 +64,7 @@ public class User {
 		this.nickname = nickname;
 	}
 
+	@Email(message="邮件格式不正确")
 	public String getEmail() {
 		return email;
 	}
