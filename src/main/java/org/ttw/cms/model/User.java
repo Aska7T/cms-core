@@ -28,6 +28,25 @@ public class User {
 	private int status;
 	private Date creatDate;
 	
+	
+	
+	
+	
+	public User(int id, String username, String password, String nickname, 
+			String email, String phone, int status) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.nickname = nickname;
+		this.email = email;
+		this.phone = phone;
+		this.status = status;
+	}
+
+	public User() {
+	}
+	
 	@Id
 	@GeneratedValue
 	public int getId() {

@@ -1,12 +1,12 @@
 package org.ttw.cms.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 
 /**
  * 角色对象，用来对应可以访问的功能。系统中为了简单值定义了管理员，发布人员，审核人员
@@ -23,6 +23,16 @@ public class Role {
 	 */
 	private RoleType roleType;
 	
+	public Role(int id, String name, RoleType roleType) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.roleType = roleType;
+	}
+
+	public Role() {
+	}
+	
 	@Id
 	@GeneratedValue
 	public int getId() {
@@ -38,6 +48,7 @@ public class Role {
 		this.name = name;
 	}
 	@Enumerated(EnumType.ORDINAL)
+	@Column(name="role_type")
 	public RoleType getRoleType() {
 		return roleType;
 	}

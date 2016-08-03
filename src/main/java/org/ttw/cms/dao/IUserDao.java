@@ -12,6 +12,23 @@ import org.ttw.cms.model.UserRole;
 
 public interface IUserDao extends IBaseDao<User>{
 	/**
+	 * 添加用户
+	 * @param user
+	 * @param rids 用户的所有角色id
+	 * @param gids 所有组id
+	 */
+	public void add(User user, Integer[] rids, Integer[] gids);
+	/**
+	 * 更新用户
+	 * @param user
+	 * @param rids
+	 * @param gids
+	 */
+	public void update(User user, Integer[] rids,Integer[] gids);
+	
+	
+	
+	/**
 	 * 获取用户的所有角色信息
 	 * @param userId
 	 * @return
