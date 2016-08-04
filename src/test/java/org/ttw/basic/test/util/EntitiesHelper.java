@@ -4,21 +4,35 @@ import java.util.List;
 
 import junit.framework.Assert;
 
+import org.ttw.cms.model.Group;
 import org.ttw.cms.model.Role;
 import org.ttw.cms.model.User;
 
+
 public class EntitiesHelper {
-	private static User baseUser = new User(1,"admin1","123","admin1","admin1@a.com","110",1);
+	private static User baseUser = new User(1,"admin1","123","admin1","admin1@admin.com","110",1);
+	
+	public static User getBaseUser() {
+		return baseUser;
+	}
 	
 	public static void assertUser(User expected,User actual) {
 		Assert.assertNotNull(expected);
 		Assert.assertEquals(expected.getId(), actual.getId());
 		Assert.assertEquals(expected.getUsername(), actual.getUsername());
 		Assert.assertEquals(expected.getNickname(), actual.getNickname());
-		Assert.assertEquals(expected.getPassword(), actual.getPassword());
+//		Assert.assertEquals(expected.getPassword(), actual.getPassword());
 		Assert.assertEquals(expected.getPhone(), actual.getPhone());
 		Assert.assertEquals(expected.getStatus(), actual.getStatus());
 		Assert.assertEquals(expected.getEmail(), actual.getEmail());
+	}
+	
+	public static void assertObjects(List<?> expected,List<?> actuals) {
+		for(int i=0;i<expected.size();i++) {
+			Object eo = expected.get(i);
+			Object ao = actuals.get(i);
+			Assert.assertEquals(eo, ao);
+		}
 	}
 	
 	public static void assertUsers(List<User> expected,List<User> actuals) {
@@ -38,11 +52,26 @@ public class EntitiesHelper {
 	
 	public static void assertRoles(List<Role> expected,List<Role> actuals) {
 		for(int i=0;i<expected.size();i++) {
-			Role eRole = expected.get(i);
-			Role aRole = actuals.get(i);
-			assertRole(eRole,aRole);
+			Role er = expected.get(i);
+			Role ar = actuals.get(i);
+			assertRole(er, ar);
 		}
 	}
+	
+	public static void assertGroup(Group expected,Group actual) {
+		Assert.assertNotNull(expected);
+		Assert.assertEquals(expected.getId(), actual.getId());
+		Assert.assertEquals(expected.getName(), actual.getName());
+	}
+	
+	public static void assertGroups(List<Group> expected,List<Group> actuals) {
+		for(int i=0;i<expected.size();i++) {
+			Group er = expected.get(i);
+			Group ar = actuals.get(i);
+			assertGroup(er, ar);
+		}
+	}
+	
 	
 	public static void assertUser(User expected) {
 		assertUser(expected, baseUser);

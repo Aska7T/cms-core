@@ -24,11 +24,16 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.transaction.support.TransactionSynchronizationManager;
-import org.ttw.basic.model.User;
+
 import org.ttw.basic.test.util.AbstractDbUnitTestCase;
 import org.ttw.basic.test.util.EntitiesHelper;
+
+import org.ttw.cms.model.User;
+import org.ttw.cms.model.Group;
 import org.ttw.cms.model.Role;
 import org.ttw.cms.model.RoleType;
+import org.ttw.cms.model.UserGroup;
+import org.ttw.cms.model.UserRole;
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 
@@ -59,7 +64,80 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 		List<Role> roles = userDao.listUserRoles(2);
 		EntitiesHelper.assertRoles(roles,actuals);
 	}
+	@Test
+	public void testListUserRoleIds() throws Exception {
+		List<Integer> actuals = Arrays.asList(2,3);
+		List<Integer> expected = userDao.listUserRoleIds(2);
+		EntitiesHelper.assertObjects(expected, actuals);
+	}
+	@Test
+	public void testListUserGroups() throws DatabaseUnitException, SQLException {
+		List<Group> actuals = Arrays.asList(new Group(1,"财务处"),new Group(3,"宣传部"));
+		List<Group> roles = userDao.listUserGroups(3);
+		EntitiesHelper.assertGroups(roles, actuals);
+	}
 	
+	@Test
+	public void testListUserGroupIds() throws DatabaseUnitException, SQLException {
+		List<Integer> actuals = Arrays.asList(1,3);
+		List<Integer> expected = userDao.listUserGroupIds(3);
+		EntitiesHelper.assertObjects(expected, actuals);
+	}
+	
+	@Test
+	public void testLoadUserRole() throws DatabaseUnitException, SQLException {
+		int uid = 1;
+		int rid = 1;
+		UserRole ur = userDao.loadUserRole(uid, rid);
+		User au = new User(1,"admin1","123","admin1","admin1@admin.com","110",1);
+		Role ar = new Role(1,"管理员",RoleType.ROLE_ADMIN);
+		EntitiesHelper.assertUser(ur.getUser(), au);
+		EntitiesHelper.assertRole(ur.getRole(), ar);
+	}
+	
+	@Test
+	public void testLoadUserGroup() throws DatabaseUnitException, SQLException {
+		int uid = 2;
+		int gid = 1;
+		UserGroup ug = userDao.loadUserGroup(uid, gid);
+		User au = new User(2,"admin2","123","admin1","admin1@admin.com","110",1);
+		Group ag = new Group(1,"财务处");
+		EntitiesHelper.assertUser(ug.getUser(), au);
+		EntitiesHelper.assertGroup(ug.getGroup(), ag);
+	}
+	
+	@Test
+	public void testLoadUserName() throws DatabaseUnitException, SQLException {
+		User au = EntitiesHelper.getBaseUser();
+		String username = "admin1";
+		User eu = userDao.loadByUsername(username);
+		EntitiesHelper.assertUser(eu, au);
+	}
+	
+	@Test
+	public void testListRoleUsers() throws DatabaseUnitException, SQLException {
+		int rid = 2;
+		List<User> aus = Arrays.asList(new User(2,"admin2","123","admin1","admin1@admin.com","110",1),
+									   new User(3,"admin3","123","admin1","admin1@admin.com","110",1));
+		List<User> eus = userDao.listRoleUsers(rid);
+		EntitiesHelper.assertUsers(eus, aus);
+	}
+	
+	@Test
+	public void testListRoleUsersByRoleType() throws DatabaseUnitException, SQLException {
+		List<User> aus = Arrays.asList(new User(2,"admin2","123","admin1","admin1@admin.com","110",1),
+									   new User(3,"admin3","123","admin1","admin1@admin.com","110",1));
+		List<User> eus = userDao.listRoleUsers(RoleType.ROLE_PUBLISH);
+		EntitiesHelper.assertUsers(eus, aus);
+	}
+	
+	@Test
+	public void testListGroupUsers() throws DatabaseUnitException, SQLException {
+		List<User> aus = Arrays.asList(new User(2,"admin2","123","admin1","admin1@admin.com","110",1),
+				   new User(3,"admin3","123","admin1","admin1@admin.com","110",1));
+		List<User> eus = userDao.listGroupUsers(1);
+		EntitiesHelper.assertUsers(eus, aus);
+	}
 	
 	@After
 	public void tearDown() throws FileNotFoundException, DatabaseUnitException, SQLException{
@@ -67,6 +145,6 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 		Session session = holder.getSession();
 		session.flush();
 		TransactionSynchronizationManager.unbindResource(sessionFactory);
-		this.resumeTable();
+//		this.resumeTable();
 	}
 }

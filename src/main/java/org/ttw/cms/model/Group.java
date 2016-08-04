@@ -25,7 +25,17 @@ public class Group {
 	 * 组描述信息
 	 */
 	private String descr;
+
 	
+	public Group(int id, String name) {
+		super();
+		this.id = id;
+		this.name = name;
+	}
+	
+	public Group() {
+		// TODO Auto-generated constructor stub
+	}
 	@Id
 	@GeneratedValue
 	public int getId() {

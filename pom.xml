@@ -1,6 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
+	<artifactId>cms-core</artifactId>
+	<packaging>jar</packaging>
 
 	<parent>
 		<groupId>org.ttw.cms</groupId>
@@ -9,9 +11,7 @@
 		<relativePath>../cms-parent/pom.xml</relativePath>
 	</parent>
 
-	<groupId>org.ttw.basic</groupId>
-	<artifactId>cms-core</artifactId>
-	<packaging>jar</packaging>
+	
 
 	<name>cms-core</name>
 	<url>http://maven.apache.org</url>
@@ -21,7 +21,7 @@
 	<dependencies>
 		<dependency>
 			<groupId>org.ttw.basic</groupId>
-			<artifactId>basic-hibernate</artifactId>
+	<artifactId>basic-hibernate</artifactId>
 		</dependency>
 		
 		

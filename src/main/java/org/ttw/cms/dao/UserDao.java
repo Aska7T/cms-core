@@ -23,32 +23,32 @@ public class UserDao extends BaseDao<User> implements IUserDao {
 
 	@Override
 	public List<Integer> listUserRoleIds(int userId) {
-		String hql = "select ur.role.id from userRole ur where ur.user.id=?";
+		String hql = "select ur.role.id from UserRole ur where ur.user.id=?";
 		return this.getSession().createQuery(hql).setParameter(0,userId).list();
 	}
 
 	@Override
 	public List<Group> listUserGroups(int userId) {
-		String hql = "select ug.group from userGroup ug where ug.user.id=?";
+		String hql = "select ug.group from UserGroup ug where ug.user.id=?";
 		return this.getSession().createQuery(hql).setParameter(0,userId).list();
 	}
 
 	@Override
-	public List<Integer> listUserGroupsIds(int userId) {
-		String hql = "select ug.role.id from userGroup ur where ug.user.id=?";
+	public List<Integer> listUserGroupIds(int userId) {
+		String hql = "select ug.group.id from UserGroup ug where ug.user.id=?";
 		return this.getSession().createQuery(hql).setParameter(0,userId).list();
 	}
 
 	@Override
 	public UserRole loadUserRole(int userId, int roleId) {
-		String hql = "select ur from userRole ur where ur.user.id=? and ur.role.id=?";
+		String hql = "select ur from UserRole ur where ur.user.id=? and ur.role.id=?";
 		return (UserRole)this.getSession().createQuery(hql)
 				.setParameter(0,userId).setParameter(1,roleId).uniqueResult();
 	}
 
 	@Override
 	public UserGroup loadUserGroup(int userId, int groupId) {
-		String hql = "select ug from userGroup ug where ug.user.id=? and ur.group.id=?";
+		String hql = "select ug from UserGroup ug where ug.user.id=? and ug.group.id=?";
 		return (UserGroup)this.getSession().createQuery(hql)
 				.setParameter(0,userId).setParameter(1,groupId).uniqueResult();
 	}
@@ -75,18 +75,6 @@ public class UserDao extends BaseDao<User> implements IUserDao {
 	public List<User> listGroupUsers(int gid) {
 		String hql = "select ug.user from UserGroup ug where ug.group.id=?";
 		return this.list(hql,gid);
-	}
-
-	@Override
-	public void add(User user, Integer[] rids, Integer[] gids) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void update(User user, Integer[] rids, Integer[] gids) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

@@ -11,21 +11,6 @@ import org.ttw.cms.model.UserGroup;
 import org.ttw.cms.model.UserRole;
 
 public interface IUserDao extends IBaseDao<User>{
-	/**
-	 * 添加用户
-	 * @param user
-	 * @param rids 用户的所有角色id
-	 * @param gids 所有组id
-	 */
-	public void add(User user, Integer[] rids, Integer[] gids);
-	/**
-	 * 更新用户
-	 * @param user
-	 * @param rids
-	 * @param gids
-	 */
-	public void update(User user, Integer[] rids,Integer[] gids);
-	
 	
 	
 	/**
@@ -51,7 +36,7 @@ public interface IUserDao extends IBaseDao<User>{
 	 * @param userId
 	 * @return
 	 */
-	public List<Integer> listUserGroupsIds(int userId);
+	public List<Integer> listUserGroupIds(int userId);
 	/**
 	 * 根据用户和角色获取用户角色的关联对象
 	 * @param userId
