@@ -55,16 +55,17 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 	private IGroupDao groupDao;
 	
 	@Before
-	public void setUp() throws DataSetException, SQLException, IOException{
+	public void setUp() throws SQLException, IOException, DatabaseUnitException{
 		Session session = sessionFactory.openSession();
 		TransactionSynchronizationManager.bindResource(sessionFactory,new SessionHolder(session));
 		this.backupAllTable();
+		IDataSet dSet = createDateSet("t_user");
+		DatabaseOperation.CLEAN_INSERT.execute(dbunitCon, dSet);
 	}
 	
 	@Test
 	public void testListUserRoles() throws DatabaseUnitException, SQLException {
-		IDataSet dSet = createDateSet("t_user");
-		DatabaseOperation.CLEAN_INSERT.execute(dbunitCon, dSet);
+		
 		List<Role> actuals = Arrays.asList(new Role(2,"文章发布人员",RoleType.ROLE_PUBLISH),new Role(3,"文章审核人员",RoleType.ROLE_AUDIT));
 		List<Role> roles = userDao.listUserRoles(2);
 		EntitiesHelper.assertRoles(roles,actuals);
@@ -102,8 +103,7 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 	
 	@Test
 	public void testLoadUserGroup() throws DatabaseUnitException, SQLException {
-		IDataSet dSet = createDateSet("t_user");
-		DatabaseOperation.CLEAN_INSERT.execute(dbunitCon, dSet);
+		
 		int uid = 2;
 		int gid = 1;
 		UserGroup ug = userDao.loadUserGroup(uid, gid);
@@ -140,8 +140,6 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 	
 	@Test
 	public void testAddUserGroup() throws DatabaseUnitException, SQLException {
-		IDataSet dSet = createDateSet("t_user");
-		DatabaseOperation.CLEAN_INSERT.execute(dbunitCon, dSet);
 		Group group = groupDao.load(1);
 		User user = userDao.load(1); 
 		userDao.addUserGroup(user,group);
@@ -153,9 +151,7 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 	}
 	
 	@Test
-	public void testAddUserRole() throws DatabaseUnitException, SQLException {
-		IDataSet dSet = createDateSet("t_user");
-		DatabaseOperation.CLEAN_INSERT.execute(dbunitCon, dSet);
+	public void testDUserRole() throws DatabaseUnitException, SQLException {
 		Role role = roleDao.load(1);
 		User user = userDao.load(1); 
 		userDao.addUserRole(user,role);
@@ -164,6 +160,24 @@ public class TestUserDao extends AbstractDbUnitTestCase{
 		assertEquals(ur.getRole().getId(),1);
 		assertEquals(ur.getUser().getId(),1);
 	}
+	
+	@Test
+	public void testDeleteUserRole() throws DatabaseUnitException, SQLException {
+		int uid=2;
+		userDao.deleteUserRoles(uid);
+		List<Role> urs = userDao.listUserRoles(uid);
+		assertTrue(urs.size()<=0);
+		
+	}
+	@Test
+	public void testDeleteUserGroup() throws DatabaseUnitException, SQLException {
+		int uid=2;
+		userDao.deleteUserGroups(uid);
+		List<Group> ugs = userDao.listUserGroups(uid);
+		assertTrue(ugs.size()<=0);
+		
+	}
+	
 	
 	@After
 	public void tearDown() throws FileNotFoundException, DatabaseUnitException, SQLException{

@@ -97,4 +97,16 @@ public class UserDao extends BaseDao<User> implements IUserDao {
 		this.getSession().save(ugGroup);
 	}
 
+	@Override
+	public void deleteUserRoles(int uid) {
+		String hql = "delete UserRole ur where ur.user.id=?";
+		this.updateByHql(hql,uid);
+	}
+
+	@Override
+	public void deleteUserGroups(int gid) {
+		String hql = "delete UserGroup ug where ug.user.id=?";
+		this.updateByHql(hql,gid);
+	}
+
 }

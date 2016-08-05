@@ -86,4 +86,8 @@ public interface IUserDao extends IBaseDao<User>{
 	 * @param group
 	 */
 	public void addUserGroup(User user, Group group);
+	
+	public void deleteUserRoles(int rid);
+	
+	public void deleteUserGroups(int gid);
 }
