@@ -41,14 +41,14 @@ public class UserDao extends BaseDao<User> implements IUserDao {
 
 	@Override
 	public UserRole loadUserRole(int userId, int roleId) {
-		String hql = "select ur from UserRole ur where ur.user.id=? and ur.role.id=?";
+		String hql = "select ur from UserRole ur left join fetch ur.user u left join fetch ur.role r where u.id=? and r.id=?";
 		return (UserRole)this.getSession().createQuery(hql)
 				.setParameter(0,userId).setParameter(1,roleId).uniqueResult();
 	}
 
 	@Override
 	public UserGroup loadUserGroup(int userId, int groupId) {
-		String hql = "select ug from UserGroup ug where ug.user.id=? and ug.group.id=?";
+		String hql = "select ug from UserGroup ug left join fetch ug.user u left join fetch ug.group g where u.id=? and g.id=?";
 		return (UserGroup)this.getSession().createQuery(hql)
 				.setParameter(0,userId).setParameter(1,groupId).uniqueResult();
 	}
@@ -75,6 +75,26 @@ public class UserDao extends BaseDao<User> implements IUserDao {
 	public List<User> listGroupUsers(int gid) {
 		String hql = "select ug.user from UserGroup ug where ug.group.id=?";
 		return this.list(hql,gid);
+	}
+
+	@Override
+	public void addUserRole(User user, Role role) {
+		UserRole urUser = this.loadUserRole(user.getId(),role.getId());
+		if(urUser!=null) return;
+		urUser =new UserRole();
+		urUser.setRole(role);
+		urUser.setUser(user);
+		this.getSession().save(urUser);
+	}
+
+	@Override
+	public void addUserGroup(User user, Group group) {
+		UserGroup ugGroup = this.loadUserGroup(user.getId(),group.getId());
+		if(ugGroup!=null) return;
+		ugGroup = new UserGroup();
+		ugGroup.setGroup(group);
+		ugGroup.setUser(user);
+		this.getSession().save(ugGroup);
 	}
 
 }
