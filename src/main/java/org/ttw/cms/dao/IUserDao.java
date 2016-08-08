@@ -3,6 +3,7 @@ package org.ttw.cms.dao;
 import java.util.List;
 
 import org.ttw.basic.dao.IBaseDao;
+import org.ttw.basic.model.Pager;
 import org.ttw.cms.model.Group;
 import org.ttw.cms.model.Role;
 import org.ttw.cms.model.RoleType;
@@ -86,8 +87,28 @@ public interface IUserDao extends IBaseDao<User>{
 	 * @param group
 	 */
 	public void addUserGroup(User user, Group group);
-	
+	/**
+	 * 删除用户角色信息
+	 * @param rid
+	 */
 	public void deleteUserRoles(int rid);
-	
+	/**
+	 * 删除用户组信息
+	 * @param gid
+	 */
 	public void deleteUserGroups(int gid);
+	
+	public Pager<User> findUser();
+	/**
+	 * 删除用户角色对象
+	 * @param uid
+	 * @param rid
+	 */
+	public void deleteUserRole(int uid,int rid);
+	/**
+	 * 删除用户组对象
+	 * @param uid
+	 * @param gid
+	 */
+	public void deleteUserGroup(int uid,int gid);
 }

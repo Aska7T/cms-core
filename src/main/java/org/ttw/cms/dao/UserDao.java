@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 import org.ttw.basic.dao.BaseDao;
+import org.ttw.basic.model.Pager;
 import org.ttw.cms.model.Group;
 import org.ttw.cms.model.Role;
 import org.ttw.cms.model.RoleType;
@@ -107,6 +108,23 @@ public class UserDao extends BaseDao<User> implements IUserDao {
 	public void deleteUserGroups(int gid) {
 		String hql = "delete UserGroup ug where ug.user.id=?";
 		this.updateByHql(hql,gid);
+	}
+
+	@Override
+	public Pager<User> findUser() {
+		return this.find("from User");
+	}
+
+	@Override
+	public void deleteUserRole(int uid, int rid) {
+		String hql = "delete User ur where ur.user.id=? and ur.role.id=?";
+		this.updateByHql(hql,new Object[]{uid,rid});
+	}
+
+	@Override
+	public void deleteUserGroup(int uid, int gid) {
+		String hql = "delete UserGroup ug where ug.user.id=? and ug.gourp.id=?";
+		this.updateByHql(hql,new Object[]{uid,gid});
 	}
 
 }

@@ -2,14 +2,14 @@
 <dataset>
 	<t_user id="1" username="admin1" password="123" nickname="admin1" email="admin1@admin.com" 
 		status="1" phone="110" create_date="2016-08-03"/>
-	<t_user id="2" username="admin2" password="123" nickname="admin2" email="admin1@admin.com" 
+	<t_user id="2" username="admin2" password="123" nickname="admin1" email="admin1@admin.com" 
 		status="1" phone="110" create_date="2016-08-03"/>
-	<t_user id="3" username="admin3" password="123" nickname="admin3" email="admin1@admin.com" 
+	<t_user id="3" username="admin3" password="123" nickname="admin1" email="admin1@admin.com" 
 		status="1" phone="110" create_date="2016-08-03"/>
 		
-	<t_group id="1" name="财务处 " descr="负责财务部门的网页"/>
-	<t_group id="2" name="计科系 " descr="负责财务部门的网页"/>
-	<t_group id="3" name="宣传部 " descr="负责财务部门的网页"/>
+	<t_group id="1" name="财务处" descr="负责财务部门的网页"/>
+	<t_group id="2" name="计科系" descr="负责财务部门的网页"/>
+	<t_group id="3" name="宣传部" descr="负责财务部门的网页"/>
 	
 	<t_role id="1" name="管理员" role_type="ROLE_ADMIN"/>
 	<t_role id="2" name="文章发布人员" role_type="ROLE_PUBLISH"/>
