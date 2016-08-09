@@ -117,13 +117,13 @@ public class UserDao extends BaseDao<User> implements IUserDao {
 
 	@Override
 	public void deleteUserRole(int uid, int rid) {
-		String hql = "delete User ur where ur.user.id=? and ur.role.id=?";
+		String hql = "delete UserRole ur where ur.user.id=? and ur.role.id=?";
 		this.updateByHql(hql,new Object[]{uid,rid});
 	}
 
 	@Override
 	public void deleteUserGroup(int uid, int gid) {
-		String hql = "delete UserGroup ug where ug.user.id=? and ug.gourp.id=?";
+		String hql = "delete UserGroup ug where ug.user.id=? and ug.group.id=?";
 		this.updateByHql(hql,new Object[]{uid,gid});
 	}
 
